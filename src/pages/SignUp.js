@@ -50,15 +50,16 @@ export default function SignUp() {
   };
 
   return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Card>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Card>
         <Box
           sx={{
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: "center"
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -149,8 +150,8 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        </Card>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
+      </Card>
+      <Copyright sx={{ mt: 5 }} />
+    </Container>
   );
 }
