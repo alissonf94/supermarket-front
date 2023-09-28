@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Table, TableBody, TableCell, TableHead, TableRow, ThemeProvider } from "@mui/material";
+import { Box, Card, Grid, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 function createData(id, price, quantity) {
     return { id, price, quantity };

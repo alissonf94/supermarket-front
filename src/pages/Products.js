@@ -44,7 +44,7 @@ export default function Products() {
     <>
       <CssBaseline />
       <main>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end', gap: "20px" }}>
+         {/*  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end', gap: "20px" }}>
             <Button onClick={handleClickOpen} variant='contained' sx={{ bgcolor: 'primary.main' }} >New Product</Button>
             <Dialog open={open} onClose={handleClose}>
               <DialogTitle>New Product</DialogTitle>
@@ -121,7 +121,7 @@ export default function Products() {
                 <Button variant='contained' onClick={handleClose}>Add</Button>
               </DialogActions>
             </Dialog>
-          </Box>
+          </Box> */}
         <Container sx={{ py: 3 }} maxWidth="lg">
           <Box>
             <Grid container spacing={4}>
