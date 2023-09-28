@@ -17,8 +17,6 @@ function createData(id, validity, product, typeProduct, price, description, quan
   return { id, validity, product, typeProduct, price, description, quantity };
 }
 
-
-
 export const rows =
 
   [createData(

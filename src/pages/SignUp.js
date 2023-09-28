@@ -30,26 +30,6 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme({
-  palette: {
-    primary: {
-      main: "#E1E667",
-      second: '#969945'
-    },
-    secondary: {
-      main: '#3F76A3',
-      second: '#223F57',
-    },
-    terciary: {
-      main: '#E65650',
-      sedond:'#993936'
-    }
-
-  }
-
-});
 
 export default function SignUp() {
   const handleSubmit = (event) => {
@@ -70,7 +50,6 @@ export default function SignUp() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Card>
@@ -173,6 +152,5 @@ export default function SignUp() {
         </Card>
         <Copyright sx={{ mt: 5 }} />
       </Container>
-    </ThemeProvider>
   );
 }
