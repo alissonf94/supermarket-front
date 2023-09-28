@@ -3,16 +3,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { red, blueGrey, purple } from "@mui/material/colors"
 import { Card, IconButton, InputAdornment } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -52,7 +48,7 @@ export default function SignUp() {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Card>
+      <Card sx={{ padding: '20px' }}>
         <Box
           sx={{
             marginTop: 8,
@@ -79,6 +75,7 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  color= "secondary"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -89,6 +86,7 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  color ="secondary"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -99,6 +97,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  color ="secondary"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -108,6 +107,7 @@ export default function SignUp() {
                   name="password"
                   label="Password"
                   id="password"
+                  color ="secondary"
                   autoComplete="new-password"
                   type={showPassword ? 'text' : 'password'}
                   InputProps={{
@@ -126,12 +126,6 @@ export default function SignUp() {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -143,7 +137,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/sign" variant="body2">
+                <Link href="/sign" variant="body2"  sx={{color:"third.second"}}>
                   Already have an account? Sign in
                 </Link>
               </Grid>

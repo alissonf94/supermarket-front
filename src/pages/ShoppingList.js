@@ -13,6 +13,8 @@ import CardContent from '@mui/material/CardContent';
 import httpservices from '../services/httpServices';
 import buyService from "../services/BuyService"
 import { Navigate, useNavigate } from 'react-router-dom';
+import RemovelineIcon from '@mui/icons-material/RemoveCircleOutline';
+import AddlineIcon from '@mui/icons-material/AddCircleOutline';
 
 // Generate Order Data
 function createData(id, validity, product, typeProduct, price, description, quantity) {
@@ -78,6 +80,12 @@ export const ShoppingList = () => {
     await httpservices.deleteItemCard(itemId)
     console.log('tetete');
   }
+  async function handleLess(itemId) {
+    //funcao para adicionar mais uma quantidade
+  }
+  async function handleAdd(itemId) {
+    //funcao para remover uma qunatitade
+  }
 
   async function getShoppingCard() {
     const shoppingCard = await httpservices.getShoppingCard()
@@ -123,6 +131,7 @@ export const ShoppingList = () => {
                 <TableCell>Type Product</TableCell>
                 <TableCell>Price</TableCell>
                 <TableCell>Quantity</TableCell>
+                <TableCell> Sub-Total</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
@@ -133,8 +142,9 @@ export const ShoppingList = () => {
                   <TableCell >{item.product.description}</TableCell>
                   <TableCell>{item.product.typeProduct}</TableCell>
                   <TableCell>R$ {Number(item.valueItem).toFixed(2).replace(".", ",")}</TableCell>
-                  <TableCell >{item.quantity}</TableCell>
+                  <TableCell ><RemovelineIcon onClick={() => {handleLess(item._id)}}/> {item.quantity} <AddlineIcon onClick={() => {handleAdd(item._id)}}/></TableCell>
                   <TableCell > <DeleteIcon onClick={() => { handleDelete(item._id) }} sx={{ cursor: 'pointer' }} /></TableCell>
+                  <TableCell> R$ { Number((item.valueItem * item.quantity)).toFixed(2).replace(".", ",")} </TableCell>
                 </TableRow>
               ))}
             </TableBody>

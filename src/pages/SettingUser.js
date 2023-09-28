@@ -78,7 +78,7 @@ const SettingUser = () => {
     };
     return (
         <Container component="main" maxWidth="md">
-            <Card>
+            <Card sx={{ padding: '20px' }}>
                 <Box component="form" n onSubmit={handleSubmit} sx={{
                     marginTop: 8,
                     display: 'flex',
@@ -94,6 +94,7 @@ const SettingUser = () => {
                                 fullWidth
                                 id="firstName"
                                 label="First Name"
+                                color="secondary"
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -104,6 +105,7 @@ const SettingUser = () => {
                                 label="Last Name"
                                 name="lastName"
                                 autoComplete="family-name"
+                                color="secondary"
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -114,6 +116,7 @@ const SettingUser = () => {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                color="secondary"
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -123,6 +126,7 @@ const SettingUser = () => {
                                 name="password"
                                 label="Password"
                                 id="password"
+                                color="secondary"
                                 value={password}
                                 onChange={handlePasswordChange}
                                 autoComplete="new-password"
@@ -150,6 +154,7 @@ const SettingUser = () => {
                                 name="newPassword"
                                 label="New Password"
                                 id="newPassword"
+                                color="secondary"
                                 autoComplete="new-password"
                                 type={showPassword ? 'text' : 'password'}
                                 value={confirmPassword}
@@ -172,7 +177,10 @@ const SettingUser = () => {
                                     ),
                                 }}
                             />
-                            <Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography sx={{ display: 'flex', flexDirection: "row", alignItems: "center", gap: '10px' }}>
+                                <h4>Strong Password:</h4>
                                 {getPasswordStrengthText(strength)}
                             </Typography>
                         </Grid>

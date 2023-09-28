@@ -18,7 +18,7 @@ function App() {
         main: '#E65650',
         second:'#993936'
       },
-      dark: `#868599`
+      dark: '#DEDEDE'
   
     }
   
