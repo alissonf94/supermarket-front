@@ -1,40 +1,22 @@
 import { Box, Card, Grid, Table, TableBody, TableCell, TableHead, TableRow, ThemeProvider } from "@mui/material";
-
-function createData(id, price, quantity) {
-    return { id, price, quantity };
-}
-
-const rows = [
-    createData(
-        1,
-        15,
-        3
-    ),
-    createData(
-        2,
-        7,
-        2
-    ),
-    createData(
-        3,
-        25.50,
-        1
-    ),
-    createData(
-        4,
-        25.50,
-        3
-    ),
-    createData(
-        4,
-        25.50,
-        3
-    ),
-
-];
-
+import buyService from "../services/BuyService"
+import * as React from 'react';
 
 export const HistoryBuy = () => {
+    const [buys, setBuys] = React.useState([])
+
+    async function getBuysClient() {
+        const getBuys = await buyService.getBuysByIdClient()
+        const data = await getBuys.json()
+        setBuys(data)
+        
+      }
+      console.log(buys)
+      React.useEffect(() => {
+        getBuysClient()
+      })
+      
+
     return (
     
         <Box sx={{ py: 1 }} maxWidth="97%"  >
@@ -50,15 +32,15 @@ export const HistoryBuy = () => {
                             <TableRow >
                                 <TableCell>ID</TableCell>
                                 <TableCell>Price</TableCell>
-                                <TableCell>Quantity</TableCell>
+                                <TableCell>Quantity items</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
-                                <TableRow key={row.id}>
-                                    <TableCell>{row.id}</TableCell>
-                                    <TableCell>R$ {Number(row.price).toFixed(2).replace(".", ",")}</TableCell>
-                                    <TableCell >{row.quantity}</TableCell>
+                            {buys.map((buy) => (
+                                <TableRow key={buy._id}>
+                                    <TableCell>{buy._id}</TableCell>
+                                    <TableCell>R$ {Number(buy.valueBuy).toFixed(2).replace(".", ",")}</TableCell>
+                                    <TableCell>{buy.items.length}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

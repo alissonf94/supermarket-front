@@ -11,7 +11,11 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import httpservices from '../services/httpServices';
+import { Navigate, useNavigate } from 'react-router-dom';
+import buyService from '../services/BuyService'
+
 import { Await } from 'react-router-dom';
+import { Try } from '@mui/icons-material';
 // Generate Order Data
 function createData(id, validity, product, typeProduct, price, description, quantity) {
   return { id, validity, product, typeProduct, price, description, quantity };
@@ -71,6 +75,7 @@ export const rows =
 
 
 export const ShoppingList = () => {
+  const navigate = useNavigate()
   const [items, setItems] = React.useState([])
 
   async function handleDelete(itemId) {
@@ -90,6 +95,16 @@ export const ShoppingList = () => {
 
   for (const item of items) {
     somaPrice += item.valueItem
+  }
+
+  async function handleRegisterBuy(){
+    try {
+      await buyService.registerBuy()
+      navigate('/historyBuy')
+    } 
+    catch (error) {
+      console.log(error)
+    }
   }
 
   React.useEffect(() => {
@@ -155,7 +170,9 @@ export const ShoppingList = () => {
               height: '100%', display: 'flex',
               flexDirection: 'column', alignItems: "end"
             }}>
-              <Button variant="outlined" >Comprar</Button>
+              <Button variant="outlined" onClick={()=>{
+                handleRegisterBuy()
+              }} >Comprar</Button>
             </CardActions>
           </Card>
         </Box>

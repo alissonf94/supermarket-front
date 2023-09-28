@@ -58,7 +58,7 @@ export default function SignIn() {
     }
 
     try {
-      data['userType'] = 'employee'
+      data['userType'] = 'client'
       const response = await httpservices.login(data)
       
       let result = await response.json()
@@ -67,7 +67,6 @@ export default function SignIn() {
       navigate("/")
     } 
     catch (error) {
-      console.log(error)
       toast(error.message)
     }
   };
