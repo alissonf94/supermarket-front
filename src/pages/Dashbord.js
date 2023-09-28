@@ -20,7 +20,7 @@ import SignIn from './Signin';
 import SignUp from './SignUp';
 import { mainListItems, secondaryListItems } from '../components/ListemItems';
 import Products from './Products';
-import {ShoppingList, rows} from './ShoppingList';
+import {ShoppingList} from './ShoppingList';
 import SettingUser from './SettingUser';
 import { HistoryBuy } from './HistoryBuy';
 
@@ -85,6 +85,7 @@ export default function Dashboard() {
                     <Toolbar
                         sx={{
                             pr: '24px',
+                            bgcolor: 'third.main',
                         }}
                     >
                         <IconButton
@@ -131,7 +132,7 @@ export default function Dashboard() {
                     <Divider />
                     <List component="nav">
                         {mainListItems}
-                        <Divider sx={{ my: 1 }} />
+                        <Divider sx={{ my: 2 }} />
                         {secondaryListItems}
                     </List>
                 </Drawer>

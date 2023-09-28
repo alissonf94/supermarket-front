@@ -11,7 +11,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
 import { Card, IconButton, InputAdornment } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -101,6 +100,7 @@ export default function SignIn() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                color ="secondary"
               />
               <TextField
                 variant="outlined"
@@ -110,6 +110,7 @@ export default function SignIn() {
                 autoComplete="current-password"
                 required
                 fullWidth
+                color ="secondary"
                 type={showPassword ? 'text' : 'password'}
                 InputProps={{
                   endAdornment: (
@@ -127,7 +128,7 @@ export default function SignIn() {
                 }}
               />
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox value="remember" color ="secondary" />}
                 label="Remember me"
               />
               <Button
@@ -140,7 +141,7 @@ export default function SignIn() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="#" variant="body2"  sx={{color:"third.second"}}>
                     Forgot password?
                   </Link>
                 </Grid>
