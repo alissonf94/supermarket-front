@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { styled, } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -12,15 +12,14 @@ import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import Album from './Products';
 import PersonIcon from '@mui/icons-material/Person';
 import { Avatar } from '@mui/material';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import SignIn from './Signin';
 import SignUp from './SignUp';
 import { mainListItems, secondaryListItems } from '../components/ListemItems';
 import Products from './Products';
-import {ShoppingList} from './ShoppingList';
+import { ShoppingList } from './ShoppingList';
 import SettingUser from './SettingUser';
 import { HistoryBuy } from './HistoryBuy';
 
@@ -70,9 +69,21 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
         },
     }),
 );
+const isAuthenticated = () => {
+    const token = localStorage.getItem("token");
+    return token !== null;
+};
 
 export default function Dashboard() {
-    const [open, setOpen] = React.useState(false);
+
+    const [authenticated, setAuthenticated] = useState(isAuthenticated());
+
+    const handleLogin = () => {
+        setAuthenticated(true); 
+        window.location.reload()
+      };
+
+    const [open, setOpen] = useState(false);
     const toggleDrawer = () => {
         setOpen(!open);
     };
@@ -107,7 +118,7 @@ export default function Dashboard() {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-                                Market
+                            Market
                         </Typography>
                         <Link href="/signin" >
                             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -133,7 +144,7 @@ export default function Dashboard() {
                     <List component="nav">
                         {mainListItems}
                         <Divider sx={{ my: 2 }} />
-                        {secondaryListItems}
+                        { authenticated ? secondaryListItems : ''}
                     </List>
                 </Drawer>
                 <Box
@@ -143,21 +154,25 @@ export default function Dashboard() {
                         height: '100vh',
                         overflow: 'auto',
                         padding: '15px',
-                        backgroundColor:"dark"
-                        
+                        backgroundColor: "dark"
                     }}
                 >
                     <Toolbar />
                     <Router >
                         <Routes>
                             <Route exact path="/" />
-                            <Route path='/signin' element={<SignIn />} />
-                            <Route path='/historyBuy' element={<HistoryBuy />} />
+                            <Route path='/signin' element={<SignIn onSignIn={handleLogin} />} />
                             <Route path='/signup' element={<SignUp />} />
-                            <Route path='/album' element={<Album />} />
-                            <Route path='/products' element={< Products/>} />
-                            <Route path='/carrinho' element={< ShoppingList/>} />
-                            <Route path='/settingUser' element={< SettingUser/>} />
+                            <Route path='/products' element={< Products />} />
+                            {authenticated && (
+                                <>
+                                    <Route path='/historyBuy' element={<HistoryBuy />} />
+                                    <Route path='/carrinho' element={<ShoppingList />} />
+                                    <Route path='/settingUser' element={<SettingUser />} />
+                                </>
+                            )}
+                            {!authenticated && <Route path="/*" element={<Navigate to="/signin" />} />}
+                            window.location.reload();
                         </Routes>
                     </Router>
                 </Box>

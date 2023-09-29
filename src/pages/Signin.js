@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -37,7 +37,7 @@ export default function SignIn() {
 
   const navigate = useNavigate()
 
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -62,7 +62,7 @@ export default function SignIn() {
       const response = await authService.loginService(data)
       let result = await response.json()
       
-      if(response.status != 201){
+      if(response.status !== 201){
         toast(result.message)
       }
       else{

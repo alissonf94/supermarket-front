@@ -165,6 +165,7 @@ export default function Products() {
                     </CardContent>
                     <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <TextField
+                      required
                       id='quantity'
                       name='quantity'
                       margin="dense"
