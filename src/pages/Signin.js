@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { Card, IconButton, InputAdornment } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import httpservices from '../services/httpServices';
+import authService from '../services/AuthServices';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -58,14 +58,20 @@ export default function SignIn() {
 
     try {
       data['userType'] = 'client'
-      const response = await httpservices.login(data)
       
+      const response = await authService.loginService(data)
       let result = await response.json()
-      localStorage.setItem("token", `Bearer ${result}`)
-      navigate("/")
+      
+      if(response.status != 201){
+        toast(result.message)
+      }
+      else{
+        localStorage.setItem("token", `Bearer ${result}`)
+        navigate("/")
+      }
     } 
-    catch (error) {
-      toast(error.message)
+    catch (err) {
+      toast(err)
     }
   };
 

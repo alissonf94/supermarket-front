@@ -10,7 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import httpservices from '../services/httpServices';
+import shoppingCardService from '../services/ShoppingCardService';
 import buyService from "../services/BuyService"
 import { Navigate, useNavigate } from 'react-router-dom';
 import RemovelineIcon from '@mui/icons-material/RemoveCircleOutline';
@@ -77,8 +77,7 @@ export const ShoppingList = () => {
   const [items, setItems] = React.useState([])
 
   async function handleDelete(itemId) {
-    await httpservices.deleteItemCard(itemId)
-    console.log('tetete');
+    await shoppingCardService.deleteItem(itemId)
   }
   async function handleLess(itemId) {
     //funcao para adicionar mais uma quantidade
@@ -88,7 +87,7 @@ export const ShoppingList = () => {
   }
 
   async function getShoppingCard() {
-    const shoppingCard = await httpservices.getShoppingCard()
+    const shoppingCard =  await shoppingCardService.getShoppingCard()
 
     const data = await shoppingCard.json()
 
