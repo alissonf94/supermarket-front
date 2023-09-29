@@ -11,7 +11,6 @@ export const HistoryBuy = () => {
         setBuys(data)
         
       }
-      console.log(buys)
       React.useEffect(() => {
         getBuysClient()
       })

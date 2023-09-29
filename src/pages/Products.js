@@ -9,6 +9,11 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { TextField } from '@mui/material';
+import productService from "../services/ProductService"
+
+import shoppingCardService from "../services/ShoppingCardService"
+
 /*import Link from '@mui/material/Link';
  import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'; */
@@ -27,6 +32,31 @@ export default function Products() {
   const handleClose = () => {
     setOpen(false);
   }; */
+  const [products, setProducts] = React.useState([])
+
+  async function getProducs() {
+    const result = await productService.findAllProducts()
+    
+    const data = await result.json()
+    
+    setProducts(data)
+    
+  }
+
+  React.useEffect(() => {
+    getProducs()
+  })
+  const [quantity, setQuantity] = React.useState()
+  
+  async function handleAddItem(id,quantity){
+    try {
+      const result = await shoppingCardService.addItem(id, quantity)
+    } 
+    catch (error) {
+      console.log(error)
+    }
+  }
+  
   return (
     <>
       <CssBaseline />
@@ -112,8 +142,8 @@ export default function Products() {
         <Container sx={{ py: 3 }} maxWidth="lg">
           <Box>
             <Grid container spacing={4}>
-              {cards.map((card) => (
-                <Grid item key={card} xs={12} sm={6} md={4}>
+              {products.map((product) => (
+                <Grid item key={product._id} xs={12} sm={6} md={4}>
                   <Card
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                   >
@@ -127,16 +157,24 @@ export default function Products() {
                     />
                     <CardContent sx={{ flexGrow: 2 }}>
                       <Typography gutterBottom variant="h5" component="h2">
-                        Heading
+                        {product.nameProduct}
                       </Typography>
                       <Typography>
-                        This is a media card. You can use this section to describe the
-                        content.
+                        {product.description}
                       </Typography>
                     </CardContent>
-                    <CardActions sx={{ display: 'flex', justifyContent: 'end' }}>
-
-                      <Button variant="contained" size="small">Add</Button>
+                    <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <TextField
+                      id='quantity'
+                      name='quantity'
+                      margin="dense"
+                      label="Quantity"
+                      type="number"
+                      variant="outlined"
+                      color="secondary"
+                      onChange={(e)=> setQuantity(e.target.value)}
+                    />
+                      <Button type='submit' variant="contained" size="small" onClick={()=>handleAddItem(product._id, quantity)}>Add</Button>
                     </CardActions>
                   </Card>
                 </Grid>
