@@ -1,5 +1,5 @@
 function registerBuy(){
-    const result = fetch("http://localhost:3333/api/buys", {
+    return fetch("http://localhost:3333/api/buys", {
         method: "POST",
         headers: {
             "Content-Type":"application/json",
