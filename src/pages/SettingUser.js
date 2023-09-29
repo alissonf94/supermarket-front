@@ -112,6 +112,17 @@ const SettingUser = () => {
                             <TextField
                                 required
                                 fullWidth
+                                id="Cpf"
+                                label="Cpf"
+                                name="cpf"
+                                autoComplete="cpf"
+                                color="secondary"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
                                 id="email"
                                 label="Email Address"
                                 name="email"
