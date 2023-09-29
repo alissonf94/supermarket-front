@@ -141,10 +141,10 @@ export const ShoppingList = () => {
                   <TableCell>{item.product.nameProduct}</TableCell>
                   <TableCell >{item.product.description}</TableCell>
                   <TableCell>{item.product.typeProduct}</TableCell>
-                  <TableCell>R$ {Number(item.valueItem).toFixed(2).replace(".", ",")}</TableCell>
+                  <TableCell>R$ {Number(item.product.price).toFixed(2).replace(".", ",")}</TableCell>
                   <TableCell ><RemovelineIcon onClick={() => {handleLess(item._id)}}/> {item.quantity} <AddlineIcon onClick={() => {handleAdd(item._id)}}/></TableCell>
+                  <TableCell> R$ { Number((item.valueItem)).toFixed(2).replace(".", ",")} </TableCell>
                   <TableCell > <DeleteIcon onClick={() => { handleDelete(item._id) }} sx={{ cursor: 'pointer' }} /></TableCell>
-                  <TableCell> R$ { Number((item.valueItem * item.quantity)).toFixed(2).replace(".", ",")} </TableCell>
                 </TableRow>
               ))}
             </TableBody>
