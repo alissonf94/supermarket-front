@@ -5,6 +5,9 @@ import {
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react'
+import clientService from "../services/ClientService"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SettingUser = () => {
     const [password, setPassword] = useState('');
@@ -18,7 +21,7 @@ const SettingUser = () => {
         event.preventDefault();
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (password === confirmPassword) {
@@ -29,6 +32,21 @@ const SettingUser = () => {
         }
         else {
             console.log("Senhas incompativeis")
+        }
+
+        const data = {
+            "nameClient": event.target.email.value,
+            "cpf": event.target.cpf.value,
+            "email": event.target.email.value,
+            "password": event.target.newPassword.value
+        }
+        
+        const response = await clientService.updateClient(data)
+        
+        let result = await response.json()
+        
+        if(response.status !== 201){
+            toast(result.message)
         }
     };
 
@@ -79,32 +97,21 @@ const SettingUser = () => {
     return (
         <Container component="main" maxWidth="md">
             <Card sx={{ padding: '20px' }}>
-                <Box component="form" n onSubmit={handleSubmit} sx={{
+                <Box component="form" onSubmit={handleSubmit} sx={{
                     marginTop: 8,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                 }}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={12}>
                             <TextField
                                 autoComplete="Typographyen-name"
-                                name="firstName"
+                                name="Name"
                                 required
                                 fullWidth
-                                id="firstName"
-                                label="First Name"
-                                color="secondary"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                name="lastName"
-                                autoComplete="family-name"
+                                id="Name"
+                                label="Name"
                                 color="secondary"
                             />
                         </Grid>
@@ -208,6 +215,7 @@ const SettingUser = () => {
 
                 </Box>
             </Card>
+            <ToastContainer />
         </Container>
     )
 }

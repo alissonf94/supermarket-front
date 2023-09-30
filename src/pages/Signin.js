@@ -57,8 +57,6 @@ export default function SignIn() {
     }
 
     try {
-      data['userType'] = 'client'
-      
       const response = await authService.loginService(data)
       let result = await response.json()
       

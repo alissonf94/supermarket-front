@@ -22,7 +22,7 @@ import Products from './Products';
 import { ShoppingList } from './ShoppingList';
 import SettingUser from './SettingUser';
 import { HistoryBuy } from './HistoryBuy';
-
+import jwt_decode from 'jwt-decode';
 
 const drawerWidth = 200;
 
@@ -71,6 +71,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 const isAuthenticated = () => {
     const token = localStorage.getItem("token");
+    /*const decode = jwt_decode(token)
+    console.log(decode.userLogin.userType)*/
     return token !== null;
 };
 
