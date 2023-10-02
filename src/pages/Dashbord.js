@@ -17,12 +17,13 @@ import { Avatar } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import SignIn from './Signin';
 import SignUp from './SignUp';
-import { mainListItems, secondaryListItems } from '../components/ListemItems';
+import { mainListItems, secondaryListItems, thirdListItems } from '../components/ListemItems';
 import Products from './Products';
 import { ShoppingList } from './ShoppingList';
 import SettingUser from './SettingUser';
 import { HistoryBuy } from './HistoryBuy';
 import jwt_decode from 'jwt-decode';
+import Promotion from './Promotion';
 
 const drawerWidth = 200;
 
@@ -81,9 +82,9 @@ export default function Dashboard() {
     const [authenticated, setAuthenticated] = useState(isAuthenticated());
 
     const handleLogin = () => {
-        setAuthenticated(true); 
+        setAuthenticated(true);
         window.location.reload()
-      };
+    };
 
     const [open, setOpen] = useState(false);
     const toggleDrawer = () => {
@@ -146,7 +147,7 @@ export default function Dashboard() {
                     <List component="nav">
                         {mainListItems}
                         <Divider sx={{ my: 2 }} />
-                        { authenticated ? secondaryListItems : ''}
+                        {authenticated ? (secondaryListItems) : ''}
                     </List>
                 </Drawer>
                 <Box
@@ -171,6 +172,7 @@ export default function Dashboard() {
                                     <Route path='/historyBuy' element={<HistoryBuy />} />
                                     <Route path='/carrinho' element={<ShoppingList />} />
                                     <Route path='/settingUser' element={<SettingUser />} />
+                                    <Route path='/promotion' element={<Promotion />} />
                                 </>
                             )}
                             {!authenticated && <Route path="/*" element={<Navigate to="/signin" />} />}

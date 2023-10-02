@@ -4,7 +4,7 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Button, Grid, } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, } from '@mui/material';
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Card from '@mui/material/Card';
@@ -16,63 +16,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import RemovelineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddlineIcon from '@mui/icons-material/AddCircleOutline';
 
-// Generate Order Data
-function createData(id, validity, product, typeProduct, price, description, quantity) {
-  return { id, validity, product, typeProduct, price, description, quantity };
-}
-
-export const rows =
-
-  [createData(
-    1,
-    '11/12/2023',
-    'Ceral Matinal',
-    'Cereal',
-    15,
-    '500g',
-    3
-  ),
-  createData(
-    2,
-    '15/02/2024',
-    'Feijao tropeiro',
-    'Feijao',
-    7,
-    '1kg',
-    2
-  ),
-  createData(
-    3,
-    '24/09/2023',
-    'Colchao Mole',
-    'Carne',
-    25.50,
-    '1kg',
-    1
-  ),
-  createData(
-    4,
-    '24/01/2024',
-    'Macarrao',
-    'Massa',
-    25.50,
-    '1kg',
-    3
-  ),
-  createData(
-    4,
-    '24/01/2024',
-    'Macarrao',
-    'Massa',
-    25.50,
-    '1kg',
-    3
-  ),
-
-  ];
-
-
-export const ShoppingList = () => {
+const Promotion = () => {
   const navigate = useNavigate()
   const [items, setItems] = React.useState([])
 
@@ -114,8 +58,96 @@ export const ShoppingList = () => {
     getShoppingCard()
   })
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Box sx={{ py: 1 }} maxWidth="97%" >
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end', gap: "20px" }}>
+        <Button onClick={handleClickOpen} variant='contained' sx={{ bgcolor: 'primary.main' }} >New Product</Button>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>New Promotion</DialogTitle>
+          <DialogContent>
+            <Grid container spacing={1}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="product"
+                  label="Product"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  color="secondary"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="typePdoduct"
+                  label="Type Product"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  color="secondary"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="price"
+                  label="Price"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  color="secondary"
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="validity"
+                  label="Validity"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  color="secondary"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="desciption"
+                  label="Desciption"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  color="secondary"
+                  multiline
+                  rows={2}
+                />
+
+              </Grid>
+            </Grid>
+          </DialogContent>
+          <DialogActions >
+            <Button variant='contained' onClick={handleClose} >Cancel</Button>
+            <Button variant='contained' onClick={handleClose}>Add</Button>
+          </DialogActions>
+        </Dialog>
+      </Box>
       <Grid container spacing={4}
         sx={{
           display: 'flex', flexDirection: 'column',
@@ -189,3 +221,5 @@ export const ShoppingList = () => {
     </Box>
   );
 }
+
+export default Promotion

@@ -8,7 +8,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { rows } from '../pages/ShoppingList';
 import HistoryIcon from '@mui/icons-material/History';
 
 export const mainListItems = (
@@ -25,14 +24,7 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Products" />
         </ListItemButton>
-        <ListItemButton href='/carrinho'>
-            <ListItemIcon>
-                <Badge badgeContent={rows.length} color="secondary">
-                <ShoppingCartIcon />
-            </Badge>
-            </ListItemIcon>
-            <ListItemText primary="Carrinho" />
-        </ListItemButton>
+        
     </React.Fragment>
 );
 
@@ -41,6 +33,41 @@ export const secondaryListItems = (
         <ListSubheader component="div" inset >
             User
         </ListSubheader>
+        <ListItemButton href='/carrinho'>
+            <ListItemIcon>
+                <Badge badgeContent={1} color="error">
+                <ShoppingCartIcon />
+            </Badge>
+            </ListItemIcon>
+            <ListItemText primary="Carrinho" />
+        </ListItemButton>
+        <ListItemButton href='/settingUser'>
+            <ListItemIcon>
+                <SettingsIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Setting" />
+        </ListItemButton>
+        <ListItemButton href='/historyBuy'>
+            <ListItemIcon>
+                <HistoryIcon/>
+            </ListItemIcon>
+            <ListItemText primary="History" />
+        </ListItemButton>
+    </React.Fragment>
+);
+export const thirdListItems = (
+    <React.Fragment>
+        <ListSubheader component="div" inset >
+           Employeer
+        </ListSubheader>
+        <ListItemButton href='/promotion'>
+            <ListItemIcon>
+                <Badge badgeContent={1} color="error">
+                <ShoppingCartIcon />
+            </Badge>
+            </ListItemIcon>
+            <ListItemText primary="Promotion" />
+        </ListItemButton>
         <ListItemButton href='/settingUser'>
             <ListItemIcon>
                 <SettingsIcon/>

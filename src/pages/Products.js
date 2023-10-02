@@ -14,24 +14,8 @@ import productService from "../services/ProductService"
 
 import shoppingCardService from "../services/ShoppingCardService"
 
-/*import Link from '@mui/material/Link';
- import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'; */
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-
-
 export default function Products() {
-  /* const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  }; */
+  
   const [products, setProducts] = React.useState([])
 
   async function getProducs() {
@@ -61,84 +45,6 @@ export default function Products() {
     <>
       <CssBaseline />
       <main>
-        {/*  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end', gap: "20px" }}>
-            <Button onClick={handleClickOpen} variant='contained' sx={{ bgcolor: 'primary.main' }} >New Product</Button>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>New Product</DialogTitle>
-              <DialogContent>
-                <Grid container spacing={1}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="product"
-                      label="Product"
-                      type="text"
-                      fullWidth
-                      variant="outlined"
-                      color="secondary"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="typePdoduct"
-                      label="Type Product"
-                      type="text"
-                      fullWidth
-                      variant="outlined"
-                      color="secondary"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="price"
-                      label="Price"
-                      type="text"
-                      fullWidth
-                      variant="outlined"
-                      color="secondary"
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="validity"
-                      label="Validity"
-                      type="text"
-                      fullWidth
-                      variant="outlined"
-                      color="secondary"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="desciption"
-                      label="Desciption"
-                      type="text"
-                      fullWidth
-                      variant="outlined"
-                      color="secondary"
-                      multiline
-                      rows={2}
-                    />
-
-                  </Grid>
-                </Grid>
-              </DialogContent>
-              <DialogActions >
-                <Button variant='contained' onClick={handleClose} >Cancel</Button>
-                <Button variant='contained' onClick={handleClose}>Add</Button>
-              </DialogActions>
-            </Dialog>
-          </Box> */}
         <Container sx={{ py: 3 }} maxWidth="lg">
           <Box>
             <Grid container spacing={4}>
@@ -162,9 +68,13 @@ export default function Products() {
                       <Typography>
                         {product.description}
                       </Typography>
+                      <Typography sx={{marginTop: 1}}>
+                      R$ {Number(product.price).toFixed(2).replace(".", ",")}
+                      </Typography>
                     </CardContent>
-                    <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <TextField
+                    <CardActions sx={{ display: 'flex', justifyContent: 'space-between', gap: '100px'}}>
+                    <TextField 
+                    size='small'
                       required
                       id='quantity'
                       name='quantity'
