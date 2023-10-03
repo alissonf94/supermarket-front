@@ -26,10 +26,10 @@ export const ShoppingList = () => {
     await shoppingCardService.deleteItem(itemId)
   }
   async function handleLess(itemId) {
-    //funcao para adicionar mais uma quantidade
+   // setQuantity (  quantotity + 1)
   }
   async function handleAdd(itemId) {
-    //funcao para remover uma qunatitade
+    // setQuantity (  quantotity - 1)
   }
 
   async function getShoppingCard() {
@@ -89,7 +89,9 @@ export const ShoppingList = () => {
                   <TableCell>R$ {Number(item.product.price).toFixed(2).replace(".", ",")}</TableCell>
                   <TableCell>
                     <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-around', paddingRight:'10px'}}>
-                      <RemovelineIcon onClick={() => { handleLess(item._id) }} /> {item.quantity} <AddlineIcon onClick={() => { handleAdd(item._id) }} />
+                      <RemovelineIcon onClick={() => { handleLess(item._id) }} sx={{ cursor: 'pointer' }}/>
+                       {item.quantity} 
+                      <AddlineIcon onClick={() => { handleAdd(item._id) }} sx={{ cursor: 'pointer' }}/>
                     </Box>
                   </TableCell>
                   <TableCell> R$ {Number((item.valueItem)).toFixed(2).replace(".", ",")} </TableCell>

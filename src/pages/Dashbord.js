@@ -14,7 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import PersonIcon from '@mui/icons-material/Person';
 import { Avatar, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate} from 'react-router-dom'
 import SignIn from './Signin';
 import SignUp from './SignUp';
 import { mainListItems, secondaryListItems, thirdListItems } from '../components/ListemItems';
@@ -71,21 +71,21 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
         },
     }),
 );
+
 const isAuthenticated = () => {
     const token = localStorage.getItem("token");
-    /*const decode = jwt_decode(token)
-    console.log(decode.userLogin.userType)*/
-    return token !== null;
+    const type = localStorage.getItem("type");
+    return {token , type};
 };
 
-const logout = () =>{
-    localStorage.removeItem("token")
-    window.location.reload()
-}
-
-export default function Dashboard() {
-
-    const [authenticated, setAuthenticated] = useState(isAuthenticated());
+export default function Dashboard() {    
+    
+    const Logout = () =>{
+        localStorage.removeItem("token")
+        localStorage.removeItem("type")
+        window.location.reload()
+    }
+    const [authenticated, setAuthenticated] = useState(isAuthenticated);
 
     const handleLogin = () => {
         setAuthenticated(true);
@@ -129,7 +129,7 @@ export default function Dashboard() {
                         >
                             Market
                         </Typography>
-                        <Link href={authenticated ? '/' : "/signin"} >
+                        <Link href={authenticated.token ? '/' : "/signin"} >
                             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                                 <PersonIcon />
                             </Avatar>
@@ -153,9 +153,9 @@ export default function Dashboard() {
                     <List component="nav">
                         {mainListItems}
                         <Divider sx={{ my: 2 }} />
-                        {authenticated ? (secondaryListItems) : ''}
-                        {authenticated ? <Divider /> : ''}
-                        {authenticated ? <ListItemButton onClick={logout}>
+                        {authenticated.token ? (authenticated.type === "client" ? secondaryListItems : thirdListItems) : ''}
+                        {authenticated.token ? <Divider /> : ''}
+                        {authenticated.token ? <ListItemButton onClick={Logout}>
                             <ListItemIcon>
                                 <LogoutIcon />
                             </ListItemIcon>
@@ -181,7 +181,7 @@ export default function Dashboard() {
                             <Route path='/signin' element={<SignIn onSignIn={handleLogin} />} />
                             <Route path='/signup' element={<SignUp />} />
                             <Route path='/products' element={< Products />} />
-                            {authenticated && (
+                            {authenticated.token && (
                                 <>
                                     <Route path='/historyBuy' element={<HistoryBuy />} />
                                     <Route path='/carrinho' element={<ShoppingList />} />
@@ -189,7 +189,7 @@ export default function Dashboard() {
                                     <Route path='/promotion' element={<Promotion />} />
                                 </>
                             )}
-                            {!authenticated && <Route path="/*" element={<Navigate to="/signin" />} />}
+                            {!authenticated.token && <Route path="/" element={<Navigate to="/signin" />} />}
                             window.location.reload();
                         </Routes>
                     </Router>

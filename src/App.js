@@ -1,5 +1,5 @@
-import { ThemeProvider, createTheme } from '@mui/material';
 import './App.css';
+import { ThemeProvider, createTheme } from '@mui/material';
 import Dashboard from './pages/Dashbord';
 
 function App() {
@@ -16,12 +16,12 @@ function App() {
       },
       third: {
         main: '#E65650',
-        second:'#993936'
+        second: '#993936'
       },
       dark: '#DEDEDE'
-  
+
     }
-  
+
   });
   return (
     <ThemeProvider theme={defaultTheme}>

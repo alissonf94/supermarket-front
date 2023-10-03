@@ -9,7 +9,7 @@ import { Badge } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HistoryIcon from '@mui/icons-material/History';
-import LogoutIcon from '@mui/icons-material/Logout';
+
 
 export const mainListItems = (
     <React.Fragment>

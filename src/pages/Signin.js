@@ -64,7 +64,8 @@ export default function SignIn() {
         toast(result.message)
       }
       else{
-        localStorage.setItem("token", `Bearer ${result}`)
+        localStorage.setItem("token", `Bearer ${result.token}`)
+        localStorage.setItem("type", `${result.type}`)
         navigate("/")
         window.location.reload()
       }
