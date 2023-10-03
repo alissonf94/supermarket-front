@@ -25,6 +25,7 @@ import { HistoryBuy } from './HistoryBuy';
 import jwt_decode from 'jwt-decode';
 import Promotion from './Promotion';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Home from './Home';
 
 const drawerWidth = 200;
 
@@ -177,7 +178,7 @@ export default function Dashboard() {
                     <Toolbar />
                     <Router >
                         <Routes>
-                            <Route exact path="/" />
+                            <Route exact path="/"  element={<Home/>} />
                             <Route path='/signin' element={<SignIn onSignIn={handleLogin} />} />
                             <Route path='/signup' element={<SignUp />} />
                             <Route path='/products' element={< Products />} />
@@ -189,8 +190,6 @@ export default function Dashboard() {
                                     <Route path='/promotion' element={<Promotion />} />
                                 </>
                             )}
-                            {!authenticated.token && <Route path="/" element={<Navigate to="/signin" />} />}
-                            window.location.reload();
                         </Routes>
                     </Router>
                 </Box>
