@@ -174,9 +174,7 @@ const Promotion = () => {
                   <TableCell>{item.product.typeProduct}</TableCell>
                   <TableCell>R$ {Number(item.product.price).toFixed(2).replace(".", ",")}</TableCell>
                   <TableCell>
-                    <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-around', paddingRight:'10px'}}>
-                      <RemovelineIcon onClick={() => { handleLess(item._id) }} /> {item.quantity} <AddlineIcon onClick={() => { handleAdd(item._id) }} />
-                    </Box>
+                    <Box>{item.quantity}</Box>
                   </TableCell>
                   <TableCell> R$ {Number((item.valueItem)).toFixed(2).replace(".", ",")} </TableCell>
                   <TableCell > <DeleteIcon onClick={() => { handleDelete(item._id) }} sx={{ cursor: 'pointer' }} /></TableCell>
@@ -185,38 +183,6 @@ const Promotion = () => {
             </TableBody>
           </Table>
         </Card>
-        <Box
-          sx={{
-            height: '100%', display: 'flex',
-            flexDirection: 'column', alignItems: "end"
-          }} >
-          <Card >
-            <CardContent>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Total de itens</TableCell>
-                    <TableCell>Valor total da compra</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell align='center'>{items.length}</TableCell>
-                    <TableCell align='center'>R$ {Number(somaPrice).toFixed(2).replace(".", ",")}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </CardContent>
-            <CardActions sx={{
-              height: '100%', display: 'flex',
-              flexDirection: 'column', alignItems: "end"
-            }}>
-              <Button variant="outlined" onClick={() => {
-                handleRegisterBuy()
-              }} >Comprar</Button>
-            </CardActions>
-          </Card>
-        </Box>
       </Grid>
     </Box>
   );

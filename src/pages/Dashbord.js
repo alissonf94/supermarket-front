@@ -13,8 +13,8 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import PersonIcon from '@mui/icons-material/Person';
-import { Avatar } from '@mui/material';
-import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom'
+import { Avatar, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import SignIn from './Signin';
 import SignUp from './SignUp';
 import { mainListItems, secondaryListItems, thirdListItems } from '../components/ListemItems';
@@ -24,6 +24,7 @@ import SettingUser from './SettingUser';
 import { HistoryBuy } from './HistoryBuy';
 import jwt_decode from 'jwt-decode';
 import Promotion from './Promotion';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const drawerWidth = 200;
 
@@ -77,6 +78,11 @@ const isAuthenticated = () => {
     return token !== null;
 };
 
+const logout = () =>{
+    localStorage.removeItem("token")
+    window.location.reload()
+}
+
 export default function Dashboard() {
 
     const [authenticated, setAuthenticated] = useState(isAuthenticated());
@@ -123,7 +129,7 @@ export default function Dashboard() {
                         >
                             Market
                         </Typography>
-                        <Link href="/signin" >
+                        <Link href={authenticated ? '/' : "/signin"} >
                             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                                 <PersonIcon />
                             </Avatar>
@@ -148,6 +154,14 @@ export default function Dashboard() {
                         {mainListItems}
                         <Divider sx={{ my: 2 }} />
                         {authenticated ? (secondaryListItems) : ''}
+                        {authenticated ? <Divider /> : ''}
+                        {authenticated ? <ListItemButton onClick={logout}>
+                            <ListItemIcon>
+                                <LogoutIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Logout" />
+                        </ListItemButton> : ''}
+
                     </List>
                 </Drawer>
                 <Box

@@ -66,6 +66,7 @@ export default function SignIn() {
       else{
         localStorage.setItem("token", `Bearer ${result}`)
         navigate("/")
+        window.location.reload()
       }
     } 
     catch (err) {

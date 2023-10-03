@@ -17,60 +17,6 @@ import RemovelineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddlineIcon from '@mui/icons-material/AddCircleOutline';
 
 // Generate Order Data
-function createData(id, validity, product, typeProduct, price, description, quantity) {
-  return { id, validity, product, typeProduct, price, description, quantity };
-}
-
-export const rows =
-
-  [createData(
-    1,
-    '11/12/2023',
-    'Ceral Matinal',
-    'Cereal',
-    15,
-    '500g',
-    3
-  ),
-  createData(
-    2,
-    '15/02/2024',
-    'Feijao tropeiro',
-    'Feijao',
-    7,
-    '1kg',
-    2
-  ),
-  createData(
-    3,
-    '24/09/2023',
-    'Colchao Mole',
-    'Carne',
-    25.50,
-    '1kg',
-    1
-  ),
-  createData(
-    4,
-    '24/01/2024',
-    'Macarrao',
-    'Massa',
-    25.50,
-    '1kg',
-    3
-  ),
-  createData(
-    4,
-    '24/01/2024',
-    'Macarrao',
-    'Massa',
-    25.50,
-    '1kg',
-    3
-  ),
-
-  ];
-
 
 export const ShoppingList = () => {
   const navigate = useNavigate()
