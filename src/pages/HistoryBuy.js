@@ -9,12 +9,13 @@ export const HistoryBuy = () => {
         const getBuys = await buyService.getBuysByIdClient()
         const data = await getBuys.json()
         setBuys(data)
-        
-      }
-      React.useEffect(() => {
-        getBuysClient()
-      })
+    }
       
+    React.useEffect(() => {
+        getBuysClient()
+    })
+      
+    console.log(buys)
 
     return (
     
