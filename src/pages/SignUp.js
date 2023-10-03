@@ -12,6 +12,11 @@ import Container from '@mui/material/Container';
 import { Card, IconButton, InputAdornment } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { async } from 'q';
+import clientService from "../services/ClientService"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -28,13 +33,30 @@ function Copyright(props) {
 
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate()
+  
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const formData = new FormData(event.currentTarget);
+    
+    const data = {}
+
+    for (const [key, value] of formData) {
+      data[key] = value
+    }
+
+    const response = await clientService.createClient(data)
+
+    const result = await response.json()
+    
+    if(response.status == 201){
+      navigate("/signin")
+    }
+    else{
+      toast(result.message)
+    }
+    
+    
   };
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -66,27 +88,16 @@ export default function SignUp() {
           </Typography>
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="name"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="name"
+                  label="Name"
                   autoFocus
                   color= "secondary"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                  color ="secondary"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -132,6 +143,7 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onSubmit={handleSubmit}
             >
               Sign Up
             </Button>
@@ -146,6 +158,7 @@ export default function SignUp() {
         </Box>
       </Card>
       <Copyright sx={{ mt: 5 }} />
+      <ToastContainer />
     </Container>
   );
 }
