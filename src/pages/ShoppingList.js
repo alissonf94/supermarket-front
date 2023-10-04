@@ -12,11 +12,30 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import shoppingCardService from '../services/ShoppingCardService';
 import buyService from "../services/BuyService"
-import { Navigate, useNavigate } from 'react-router-dom';
-import RemovelineIcon from '@mui/icons-material/RemoveCircleOutline';
-import AddlineIcon from '@mui/icons-material/AddCircleOutline';
+import { useNavigate } from 'react-router-dom';
+
 
 // Generate Order Data
+export const ListCard = async () => {
+  const [itemsCard, setItemsCard] = React.useState([])
+  const [numberOfItems, setNumberOfItems] = React.useState(0);
+
+  async function getShoppingCard() {
+    const shoppingCard = await shoppingCardService.getShoppingCard()
+    const data = await shoppingCard.json()
+    setItemsCard(data.items)
+  }
+
+  React.useEffect(() => {
+    getShoppingCard()
+  })
+
+  React.useEffect(() => {
+    setNumberOfItems(itemsCard.length);
+  }, [itemsCard]);
+
+  return numberOfItems
+};
 
 export const ShoppingList = () => {
   const navigate = useNavigate()
@@ -24,12 +43,6 @@ export const ShoppingList = () => {
 
   async function handleDelete(itemId) {
     await shoppingCardService.deleteItem(itemId)
-  }
-  async function handleLess(itemId) {
-   // setQuantity (  quantotity + 1)
-  }
-  async function handleAdd(itemId) {
-    // setQuantity (  quantotity - 1)
   }
 
   async function getShoppingCard() {
@@ -87,13 +100,7 @@ export const ShoppingList = () => {
                   <TableCell >{item.product.description}</TableCell>
                   <TableCell>{item.product.typeProduct}</TableCell>
                   <TableCell>R$ {Number(item.product.price).toFixed(2).replace(".", ",")}</TableCell>
-                  <TableCell>
-                    <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-around', paddingRight:'10px'}}>
-                      <RemovelineIcon onClick={() => { handleLess(item._id) }} sx={{ cursor: 'pointer' }}/>
-                       {item.quantity} 
-                      <AddlineIcon onClick={() => { handleAdd(item._id) }} sx={{ cursor: 'pointer' }}/>
-                    </Box>
-                  </TableCell>
+                  <TableCell>{item.quantity}</TableCell>
                   <TableCell> R$ {Number((item.valueItem)).toFixed(2).replace(".", ",")} </TableCell>
                   <TableCell > <DeleteIcon onClick={() => { handleDelete(item._id) }} sx={{ cursor: 'pointer' }} /></TableCell>
                 </TableRow>

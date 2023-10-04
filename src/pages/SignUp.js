@@ -12,11 +12,10 @@ import Container from '@mui/material/Container';
 import { Card, IconButton, InputAdornment } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { async } from 'q';
 import clientService from "../services/ClientService"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -49,7 +48,7 @@ export default function SignUp() {
 
     const result = await response.json()
     
-    if(response.status == 201){
+    if(response.status === 201){
       navigate("/signin")
     }
     else{
