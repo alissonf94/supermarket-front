@@ -3,7 +3,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import React from 'react'
 import { Box, Button, Card, CardActions, CardContent, TextField, Typography } from '@mui/material';
-import productService from "../services/ProductService"
+import promotionService from '../services/PromotionService'
 import shoppingCardService from "../services/ShoppingCardService"
 
 const Home = () => {
@@ -19,19 +19,19 @@ const Home = () => {
         }
     }
 
-    const [products, setProducts] = React.useState([])
+    const [promotions, setPromotions] = React.useState([])
 
-    async function getProducs() {
-        const result = await productService.findAllProducts()
-
-        const data = await result.json()
-
-        setProducts(data)
-
-    }
-    React.useEffect(() => {
-        getProducs()
-    })
+    async function getPromotions() {
+        const promotions = await promotionService.getPromotions()
+    
+        const data = await promotions.json()
+    
+        setPromotions(data)
+      }
+    
+      React.useEffect(() => {
+        getPromotions()
+      })
 
     return (
         <Box component="main" sx={{ marginTop: "100px" }} >
@@ -91,19 +91,19 @@ const Home = () => {
                     slidesToSlide={1}
                     swipeable
                 >
-                    {products.map((product) => (
+                    {promotions.map((promotion) => (
                         <Card
                             sx={{ height: '100%', maxWidth: "70%", display: 'flex', flexDirection: 'column', alignItems: "center" }}
                         >
                             <CardContent sx={{ flexGrow: 2 }}>
                                 <Typography gutterBottom variant="h5" component="h2">
-                                    {product.nameProduct}
+                                    {promotion.product.nameProduct}
                                 </Typography>
                                 <Typography>
-                                    {product.description}
+                                    {promotion.product.description}
                                 </Typography>
                                 <Typography sx={{ marginTop: 1 }}>
-                                    R$ {Number(product.price).toFixed(2).replace(".", ",")}
+                                    R$ {Number(promotion.product.price).toFixed(2).replace(".", ",")}
                                 </Typography>
                             </CardContent>
                             <CardActions sx={{ display: 'flex', justifyContent: 'space-between', gap: '100px' }}>
@@ -129,7 +129,7 @@ const Home = () => {
                                         }
                                     }}
                                 />
-                                <Button type='submit' variant="contained" size="small" onClick={() => handleAddItem(product._id, quantity)}>Add</Button>
+                                <Button type='submit' variant="contained" size="small" onClick={() => handleAddItem(promotion.product._id, quantity)}>Add</Button>
                             </CardActions>
                         </Card>
                     ))}
