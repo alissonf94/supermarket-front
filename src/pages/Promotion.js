@@ -11,51 +11,37 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import shoppingCardService from '../services/ShoppingCardService';
+import promotionService from '../services/PromotionService'
 import buyService from "../services/BuyService"
 import { Navigate, useNavigate } from 'react-router-dom';
 import RemovelineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddlineIcon from '@mui/icons-material/AddCircleOutline';
+import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Promotion = () => {
   const navigate = useNavigate()
-  const [items, setItems] = React.useState([])
 
-  async function handleDelete(itemId) {
-    await shoppingCardService.deleteItem(itemId)
+  const [nameProduct, setNameProduct] = useState('')
+  const [priceProduct, setPrice] = useState('')
+
+  const [promotions, setPromotions] = React.useState([])
+
+  async function handleDelete(productId) {
+    await promotionService.deletePromotion(productId)
   }
-  async function handleLess(itemId) {
-    //funcao para adicionar mais uma quantidade
-  }
-  async function handleAdd(itemId) {
-    //funcao para remover uma qunatitade
-  }
+ 
+  async function getPromotions() {
+    const promotions = await promotionService.getPromotions()
 
-  async function getShoppingCard() {
-    const shoppingCard = await shoppingCardService.getShoppingCard()
+    const data = await promotions.json()
 
-    const data = await shoppingCard.json()
-
-    setItems(data.items)
-  }
-
-  let somaPrice = 0;
-
-  for (const item of items) {
-    somaPrice += item.valueItem
-  }
-
-  async function handleRegisterBuy() {
-    try {
-      await buyService.registerBuy()
-      navigate('/historyBuy')
-    }
-    catch (error) {
-      console.log(error)
-    }
+    setPromotions(data)
   }
 
   React.useEffect(() => {
-    getShoppingCard()
+    getPromotions()
   })
 
   const [open, setOpen] = React.useState(false);
@@ -68,10 +54,32 @@ const Promotion = () => {
     setOpen(false);
   };
 
+   const handlePriceChange = (e)=>{
+    const price = e.target.value;
+    setPrice(price)
+   }
+
+   const handleNameProductChange = (e)=>{
+    const name = e.target.value;
+    setNameProduct(name)
+   }
+   
+   async function handleCreatePromotion (productName, productPrice){
+     const response = await promotionService.createPromotion(productName, productPrice)
+     
+     const result = response.json()
+
+   }
+
+   function handleClick(productName, productPrice){
+    handleCreatePromotion(productName, productPrice)
+    handleClose()
+   }
+
   return (
     <Box sx={{ py: 1 }} maxWidth="97%" >
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end', gap: "20px" }}>
-        <Button onClick={handleClickOpen} variant='contained' sx={{ bgcolor: 'primary.main' }} >New Product</Button>
+        <Button onClick={handleClickOpen} variant='contained' sx={{ bgcolor: 'primary.main' }} >New promotion</Button>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>New Promotion</DialogTitle>
           <DialogContent>
@@ -86,20 +94,10 @@ const Promotion = () => {
                   fullWidth
                   variant="outlined"
                   color="secondary"
+                  onChange={handleNameProductChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="typePdoduct"
-                  label="Type Product"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                  color="secondary"
-                />
-              </Grid>
+             
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoFocus
@@ -110,41 +108,14 @@ const Promotion = () => {
                   fullWidth
                   variant="outlined"
                   color="secondary"
+                  onChange={handlePriceChange}
                 />
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="validity"
-                  label="Validity"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                  color="secondary"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="desciption"
-                  label="Desciption"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                  color="secondary"
-                  multiline
-                  rows={2}
-                />
-
               </Grid>
             </Grid>
           </DialogContent>
           <DialogActions >
             <Button variant='contained' onClick={handleClose} >Cancel</Button>
-            <Button variant='contained' onClick={handleClose}>Add</Button>
+            <Button variant='contained' onClick={()=>{handleClick(nameProduct, priceProduct)}}>Add</Button>
           </DialogActions>
         </Dialog>
       </Box>
@@ -158,32 +129,29 @@ const Promotion = () => {
             <TableHead sx={{ fontSize: 45 }}>
               <TableRow >
                 <TableCell>Name</TableCell>
-                <TableCell >Description</TableCell>
                 <TableCell>Type Product</TableCell>
                 <TableCell>Price</TableCell>
                 <TableCell>Quantity</TableCell>
-                <TableCell> Sub-Total</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((item) => (
-                <TableRow key={item._id}>
-                  <TableCell>{item.product.nameProduct}</TableCell>
-                  <TableCell >{item.product.description}</TableCell>
-                  <TableCell>{item.product.typeProduct}</TableCell>
-                  <TableCell>R$ {Number(item.product.price).toFixed(2).replace(".", ",")}</TableCell>
+              {promotions.map((promotion) => (
+                <TableRow key={promotion._id}>
+                  <TableCell>{promotion.product.nameProduct}</TableCell>
+                  <TableCell>{promotion.product.typeProduct}</TableCell>
+                  <TableCell>R$ {Number(promotion.product.price).toFixed(2).replace(".", ",")}</TableCell>
                   <TableCell>
-                    <Box>{item.quantity}</Box>
+                    <Box>{promotion.product.quantityProduct}</Box>
                   </TableCell>
-                  <TableCell> R$ {Number((item.valueItem)).toFixed(2).replace(".", ",")} </TableCell>
-                  <TableCell > <DeleteIcon onClick={() => { handleDelete(item._id) }} sx={{ cursor: 'pointer' }} /></TableCell>
+                  <TableCell > <DeleteIcon onClick={() => { handleDelete(promotion._id) }} sx={{ cursor: 'pointer' }} /></TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </Card>
       </Grid>
+      <ToastContainer />
     </Box>
   );
 }

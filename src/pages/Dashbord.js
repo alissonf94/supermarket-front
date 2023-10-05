@@ -24,6 +24,7 @@ import SettingUser from './SettingUser';
 import { HistoryBuy } from './HistoryBuy';
 import jwt_decode from 'jwt-decode';
 import Promotion from './Promotion';
+import ProductEmployee from "./ProductEmployee"
 import LogoutIcon from '@mui/icons-material/Logout';
 import Home from './Home';
 
@@ -188,6 +189,7 @@ export default function Dashboard() {
                                     <Route path='/carrinho' element={<ShoppingList />} />
                                     <Route path='/settingUser' element={<SettingUser />} />
                                     <Route path='/promotion' element={<Promotion />} />
+                                    <Route path='/productEmployee' element={<ProductEmployee/>}></Route>
                                 </>
                             )}
                         </Routes>

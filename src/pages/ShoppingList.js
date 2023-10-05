@@ -15,9 +15,26 @@ import buyService from "../services/BuyService"
 import { Navigate, useNavigate } from 'react-router-dom';
 import RemovelineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddlineIcon from '@mui/icons-material/AddCircleOutline';
+import { async } from 'q';
 
 // Generate Order Data
+export const ListCard = async ()=>{
+  const [itemsCard, setItemsCard] = React.useState([])
+  
+  async function getShoppingCard() {
+    const shoppingCard = await shoppingCardService.getShoppingCard()
 
+    const data = await shoppingCard.json()
+
+    setItemsCard(data.items)
+  }
+
+  React.useEffect(() => {
+    getShoppingCard()
+  })
+
+  return itemsCard.length
+}
 export const ShoppingList = () => {
   const navigate = useNavigate()
   const [items, setItems] = React.useState([])

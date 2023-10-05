@@ -9,7 +9,7 @@ import { Badge } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HistoryIcon from '@mui/icons-material/History';
-
+import { ListCard} from '../pages/ShoppingList';
 
 export const mainListItems = (
     <React.Fragment>
@@ -19,12 +19,7 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Main"/>
         </ListItemButton>
-        <ListItemButton href='/products'>
-            <ListItemIcon>
-                <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Products" />
-        </ListItemButton>
+        
         
     </React.Fragment>
 );
@@ -36,7 +31,7 @@ export const secondaryListItems = (
         </ListSubheader>
         <ListItemButton href='/carrinho'>
             <ListItemIcon>
-                <Badge badgeContent={1} color="error">
+                <Badge badgeContent={ListCard} color="error">
                 <ShoppingCartIcon />
             </Badge>
             </ListItemIcon>
@@ -54,6 +49,12 @@ export const secondaryListItems = (
             </ListItemIcon>
             <ListItemText primary="History" />
         </ListItemButton>
+        <ListItemButton href='/products'>
+            <ListItemIcon>
+                <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Products" />
+        </ListItemButton>
     </React.Fragment>
 );
 export const thirdListItems = (
@@ -61,6 +62,12 @@ export const thirdListItems = (
         <ListSubheader component="div" inset >
            Employeer
         </ListSubheader>
+        <ListItemButton href='/productEmployee'>
+            <ListItemIcon>
+                <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Products" />
+        </ListItemButton>
         <ListItemButton href='/promotion'>
             <ListItemIcon>
                 <Badge badgeContent={1} color="error">
