@@ -2,13 +2,23 @@
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import React from 'react'
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Box, Button, Card, CardActions, CardContent, TextField, Typography } from '@mui/material';
 import productService from "../services/ProductService"
-
-
-
+import shoppingCardService from "../services/ShoppingCardService"
 
 const Home = () => {
+
+    const [quantity, setQuantity] = React.useState()
+
+    async function handleAddItem(id, quantity) {
+        try {
+            const result = await shoppingCardService.addItem(id, quantity)
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
     const [products, setProducts] = React.useState([])
 
     async function getProducs() {
@@ -24,27 +34,27 @@ const Home = () => {
     })
 
     return (
-        <>
-            <div>
+        <Box component="main" sx={{ marginTop: "100px" }} >
+            <Box sx={{ marginInline: "10%" }}>
                 <Carousel
                     additionalTransfrom={0}
                     arrows
                     autoPlay
                     autoPlaySpeed={2500}
-                    centerMode={false}
+                    centerMode={true}
                     className=""
                     containerClass="container"
                     customTransition="all 2s linear"
                     dotListClass=""
                     draggable
-                    focusOnSelect={false}
-                    infinite
+                    focusOnSelect={true}
+                    infinite={true}
                     itemClass=""
                     keyBoardControl
-                    minimumTouchDrag={80}
+                    minimumTouchDrag={200}
                     pauseOnHover
                     renderArrowsWhenDisabled={false}
-                    renderButtonGroupOutside={false}
+                    renderButtonGroupOutside={true}
                     renderDotsOutside={false}
                     responsive={{
                         desktop: {
@@ -52,7 +62,7 @@ const Home = () => {
                                 max: 3000,
                                 min: 1024
                             },
-                            items: 3,
+                            items: 1,
                             partialVisibilityGutter: 40
                         },
                         mobile: {
@@ -68,22 +78,22 @@ const Home = () => {
                                 max: 1024,
                                 min: 464
                             },
-                            items: 2,
+                            items: 1,
                             partialVisibilityGutter: 30
                         }
                     }}
-                    rewind={false}
-                    rewindWithAnimation={false}
+                    rewind={true}
+                    rewindWithAnimation={true}
                     rtl={false}
-                    shouldResetAutoplay
-                    showDots
+                    shouldResetAutoplay={true}
+                    showDots={false}
                     sliderClass=""
                     slidesToSlide={1}
                     swipeable
                 >
                     {products.map((product) => (
                         <Card
-                            sx={{ height: '100%', display: 'flex', flexDirection: 'column', margin: "25px" }}
+                            sx={{ height: '100%', maxWidth: "70%", display: 'flex', flexDirection: 'column', alignItems: "center" }}
                         >
                             <CardContent sx={{ flexGrow: 2 }}>
                                 <Typography gutterBottom variant="h5" component="h2">
@@ -96,15 +106,39 @@ const Home = () => {
                                     R$ {Number(product.price).toFixed(2).replace(".", ",")}
                                 </Typography>
                             </CardContent>
+                            <CardActions sx={{ display: 'flex', justifyContent: 'space-between', gap: '100px' }}>
+                                <TextField
+                                    size='small'
+                                    required
+                                    id='quantity'
+                                    name='quantity'
+                                    margin="dense"
+                                    label="Quantity"
+                                    type="number"
+                                    variant="outlined"
+                                    color="secondary"
+                                    inputProps={{
+                                        min: 1
+                                    }}
+                                    onChange={(e) => {
+                                        const inputValue = e.target.value
+                                        if (/^\d+$/.test(inputValue)) {
+                                            if (parseInt(inputValue) >= 1) {
+                                                setQuantity(inputValue);
+                                            }
+                                        }
+                                    }}
+                                />
+                                <Button type='submit' variant="contained" size="small" onClick={() => handleAddItem(product._id, quantity)}>Add</Button>
+                            </CardActions>
                         </Card>
                     ))}
-
                 </Carousel>
-            </div>
-            <div>
+            </Box>
+            {/* <Box>
                 tese
-            </div>
-        </>
+            </Box> */}
+        </Box>
     )
 }
 

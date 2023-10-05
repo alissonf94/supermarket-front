@@ -14,7 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import PersonIcon from '@mui/icons-material/Person';
 import { Avatar, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route,} from 'react-router-dom'
 import SignIn from './Signin';
 import SignUp from './SignUp';
 import { mainListItems, secondaryListItems, thirdListItems } from '../components/ListemItems';
@@ -22,7 +22,6 @@ import Products from './Products';
 import { ShoppingList } from './ShoppingList';
 import SettingUser from './SettingUser';
 import { HistoryBuy } from './HistoryBuy';
-import jwt_decode from 'jwt-decode';
 import Promotion from './Promotion';
 import ProductEmployee from "./ProductEmployee"
 import LogoutIcon from '@mui/icons-material/Logout';

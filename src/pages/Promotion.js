@@ -8,16 +8,11 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextFi
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import shoppingCardService from '../services/ShoppingCardService';
+
 import promotionService from '../services/PromotionService'
-import buyService from "../services/BuyService"
-import { Navigate, useNavigate } from 'react-router-dom';
-import RemovelineIcon from '@mui/icons-material/RemoveCircleOutline';
-import AddlineIcon from '@mui/icons-material/AddCircleOutline';
+import {  useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Promotion = () => {

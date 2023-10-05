@@ -83,7 +83,17 @@ export default function Products() {
                       type="number"
                       variant="outlined"
                       color="secondary"
-                      onChange={(e)=> setQuantity(e.target.value)}
+                      inputProps={{
+                        min: 1
+                    }}
+                    onChange={(e) => {
+                        const inputValue = e.target.value
+                        if (/^\d+$/.test(inputValue)) {
+                            if (parseInt(inputValue) >= 1) {
+                                setQuantity(inputValue);
+                            }
+                        }
+                    }}
                     />
                       <Button type='submit' variant="contained" size="small" onClick={()=>handleAddItem(product._id, quantity)}>Add</Button>
                     </CardActions>
