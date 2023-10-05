@@ -23,7 +23,7 @@ const Product = () => {
   const navigate = useNavigate()
 
   const [nameProduct, setNameProduct] = useState('')
-  const [priceProduct, setPrice] = useState('')
+  const [priceProduct, setPrice] = useState()
   const [typeProduct, setType] = useState('')
   const [descriptionProduct, setdescription] = useState('')
   const [validityProduct, setValidity] = useState('')
@@ -32,7 +32,7 @@ const Product = () => {
   const [Products, setProducts] = React.useState([])
 
   async function handleDelete(productId) {
-   /* await promotionService.deletePromotion(productId)*/
+   await productService.deleteProduct(productId)
   }
  
   async function getProducts() {
@@ -89,8 +89,8 @@ const Product = () => {
 
     const response = await productService.createProduct(productName, productPrice, descriptionProduct, typeProduct, validityProduct, quantityProduct)
      
-    const result = response.json()
-
+    const result = await response.json()
+    console.log(result)
    }
 
    function handleClick(productName, productPrice, descriptionProduct, typeProduct, validityProduct, quantityProduct){
@@ -125,7 +125,7 @@ const Product = () => {
                   margin="dense"
                   id="typePdoduct"
                   label="Type Product"
-                  type="text"
+                  type="txt"
                   fullWidth
                   variant="outlined"
                   color="secondary"
@@ -138,7 +138,7 @@ const Product = () => {
                   margin="dense"
                   id="price"
                   label="Price"
-                  type="text"
+                  type="Number"
                   fullWidth
                   variant="outlined"
                   color="secondary"
@@ -181,12 +181,11 @@ const Product = () => {
                   margin="dense"
                   id="quantity"
                   label="Quantity"
-                  type="number"
+                  type="Number"
                   fullWidth
                   variant="outlined"
                   color="secondary"
                   onChange={handleQuantityProductChange}
-                  multiline
                   rows={2}
                 />
 

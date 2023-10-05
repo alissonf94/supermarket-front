@@ -10,6 +10,9 @@ function findAllProducts(){
 }
 
 function createProduct(productName, productPrice, descriptionProduct, typeProduct, validityProduct, quantityProduct){
+    productPrice = parseInt(productPrice)
+    quantityProduct = parseInt(quantityProduct)
+
     return fetch("http://localhost:3333/api/products", {
         method: "POST",
         headers: {
@@ -26,4 +29,15 @@ function createProduct(productName, productPrice, descriptionProduct, typeProduc
         })
     })
 }
-module.exports = {findAllProducts, createProduct}
+
+function deleteProduct(productId){
+    return fetch(`http://localhost:3333/api/product/${productId}`,{
+        method: "DELETE",
+        headers: {
+            "Content-Type":"application/json",
+            "Authorization": localStorage.getItem("token")
+        },
+    })
+}
+
+module.exports = {findAllProducts, createProduct, deleteProduct}
