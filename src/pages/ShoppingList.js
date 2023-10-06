@@ -72,7 +72,7 @@ export const ShoppingList = () => {
   React.useEffect(() => {
     getShoppingCard()
   })
-
+  console.log(items)
   return (
     <Box sx={{ py: 1 }} maxWidth="97%" >
       <Grid container spacing={4}

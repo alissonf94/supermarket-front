@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -38,6 +38,7 @@ export default function SignIn() {
   const navigate = useNavigate()
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -48,10 +49,12 @@ export default function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     
+    setIsLoginButtonDisabled(true)
+
     const formData = new FormData(event.currentTarget);
-  
+
     const data = {}
-   
+
     for (const [key, value] of formData) {
       data[key] = value
     }
@@ -59,19 +62,25 @@ export default function SignIn() {
     try {
       const response = await authService.loginService(data)
       let result = await response.json()
-      
-      if(response.status !== 201){
-        toast(result.message)
-      }
-      else{
+
+      if (response.status !== 201) {
+        setTimeout(() => {
+          setIsLoginButtonDisabled(false); 
+        }, 8000);
+
+        toast(result.message,{
+          autoClose: 7500
+        });
+      } else {
         localStorage.setItem("token", `Bearer ${result.token}`)
         localStorage.setItem("type", `${result.type}`)
         navigate("/")
         window.location.reload()
       }
-    } 
+    }
     catch (err) {
       toast(err)
+      setIsLoginButtonDisabled(false);
     }
   };
 
@@ -104,7 +113,7 @@ export default function SignIn() {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                color ="secondary"
+                color="secondary"
               />
               <TextField
                 variant="outlined"
@@ -114,7 +123,7 @@ export default function SignIn() {
                 autoComplete="current-password"
                 required
                 fullWidth
-                color ="secondary"
+                color="secondary"
                 type={showPassword ? 'text' : 'password'}
                 InputProps={{
                   endAdornment: (
@@ -132,7 +141,7 @@ export default function SignIn() {
                 }}
               />
               <FormControlLabel
-                control={<Checkbox value="remember" color ="secondary" />}
+                control={<Checkbox value="remember" color="secondary" />}
                 label="Remember me"
               />
               <Button
@@ -140,17 +149,18 @@ export default function SignIn() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled={isLoginButtonDisabled}
               >
                 Sign In
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2"  sx={{color:"third.second"}}>
+                  <Link href="#" variant="body2" sx={{ color: "third.second" }}>
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/signup" variant="body2" sx={{color:"third.second"}} >
+                  <Link href="/signup" variant="body2" sx={{ color: "third.second" }} >
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

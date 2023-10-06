@@ -63,13 +63,16 @@ export default function Products() {
                     />
                     <CardContent sx={{ flexGrow: 2 }}>
                       <Typography gutterBottom variant="h5" component="h2">
-                        {product.nameProduct}
+                        Nome: {product.nameProduct}
                       </Typography>
                       <Typography>
-                        {product.description}
+                        Descrição: {product.description}
                       </Typography>
                       <Typography sx={{marginTop: 1}}>
-                      R$ {Number(product.price).toFixed(2).replace(".", ",")}
+                      Preço: R$ {Number(product.price).toFixed(2).replace(".", ",")}
+                      </Typography>
+                      <Typography>
+                        validade: {product.validity}
                       </Typography>
                     </CardContent>
                     <CardActions sx={{ display: 'flex', justifyContent: 'space-between', gap: '100px'}}>

@@ -5,7 +5,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import HomeIcon from '@mui/icons-material/Home';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HistoryIcon from '@mui/icons-material/History';
@@ -69,21 +69,9 @@ export const thirdListItems = (
         </ListItemButton>
         <ListItemButton href='/promotion'>
             <ListItemIcon>
-                <ShoppingCartIcon />
+                <AttachMoneyIcon />
             </ListItemIcon>
             <ListItemText primary="Promotion" />
-        </ListItemButton>
-        <ListItemButton href='/settingUser'>
-            <ListItemIcon>
-                <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Setting" />
-        </ListItemButton>
-        <ListItemButton href='/historyBuy'>
-            <ListItemIcon>
-                <HistoryIcon />
-            </ListItemIcon>
-            <ListItemText primary="History" />
         </ListItemButton>
     </React.Fragment>
 );

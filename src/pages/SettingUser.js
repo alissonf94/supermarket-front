@@ -35,8 +35,7 @@ const SettingUser = () => {
         }
 
         const data = {
-            "nameClient": event.target.email.value,
-            "cpf": event.target.cpf.value,
+            "name": event.target.name.value,
             "email": event.target.email.value,
             "password": event.target.newPassword.value
         }
@@ -44,10 +43,8 @@ const SettingUser = () => {
         const response = await clientService.updateClient(data)
         
         let result = await response.json()
-        
-        if(response.status !== 201){
-            toast(result.message)
-        }
+
+        toast(result.message)
     };
 
     const handlePasswordChange = (e) => {
@@ -107,22 +104,11 @@ const SettingUser = () => {
                         <Grid item xs={12} sm={12}>
                             <TextField
                                 autoComplete="Typographyen-name"
-                                name="Name"
+                                name="name"
                                 required
                                 fullWidth
-                                id="Name"
+                                id="name"
                                 label="Name"
-                                color="secondary"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="Cpf"
-                                label="Cpf"
-                                name="cpf"
-                                autoComplete="cpf"
                                 color="secondary"
                             />
                         </Grid>

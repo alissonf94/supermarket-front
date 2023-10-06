@@ -10,9 +10,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Card from '@mui/material/Card';
 
 import promotionService from '../services/PromotionService'
-import {  useNavigate } from 'react-router-dom';
+import {  Await, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Promotion = () => {
@@ -62,7 +62,11 @@ const Promotion = () => {
    async function handleCreatePromotion (productName, productPrice){
      const response = await promotionService.createPromotion(productName, productPrice)
      
-     const result = response.json()
+     const result = await response.json()
+
+     if(response.status !== 201){
+      toast(result.message)
+    }
 
    }
 
@@ -145,8 +149,8 @@ const Promotion = () => {
             </TableBody>
           </Table>
         </Card>
+        <ToastContainer />
       </Grid>
-      <ToastContainer />
     </Box>
   );
 }

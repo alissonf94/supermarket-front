@@ -11,7 +11,7 @@ import Card from '@mui/material/Card';
 import productService  from '../services/ProductService'
 import {  useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Product = () => {
@@ -83,9 +83,13 @@ const Product = () => {
    async function handleCreateProduct (productName, productPrice,descriptionProduct, typeProduct, validityProduct, quantityProduct ){
 
     const response = await productService.createProduct(productName, productPrice, descriptionProduct, typeProduct, validityProduct, quantityProduct)
-     
+    
     const result = await response.json()
-    console.log(result)
+    
+    if(response.status !== 201){
+      toast(result.message)
+    }
+    
    }
 
    function handleClick(productName, productPrice, descriptionProduct, typeProduct, validityProduct, quantityProduct){
@@ -224,8 +228,8 @@ const Product = () => {
             </TableBody>
           </Table>
         </Card>
+        <ToastContainer/>
       </Grid>
-      <ToastContainer />
     </Box>
   );
 }
