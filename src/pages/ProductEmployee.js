@@ -76,12 +76,8 @@ const Product = () => {
   }
 
   const handleValidityProductChange = (e) => {
-    const inputText = e.target.value.replace(/\D/g, '');
-    const formattedInput = inputText.replace(/(\d{2})(\d{2})(\d{2})/, '$1/$2/$3');
-
-    if (isValidDate(formattedInput)) {
-      setValidity(formattedInput);
-    }
+    const validity = e.target.value.replace(/\D/g, '');
+    setValidity(validity)
   };
 
   const isValidDate = (date) => {
@@ -167,24 +163,18 @@ const Product = () => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <InputMask
-                  mask="99/99/99"
-                  onChange={handleValidityProductChange}
-                >
-                  {() => (
-                    <TextField
-                      autoFocus
-                      required
-                      margin="dense"
-                      id="validity"
-                      label="Validity"
-                      type="text"
-                      fullWidth
-                      variant="outlined"
-                      color="secondary"
-                    />
-                  )}
-                </InputMask>
+                <TextField
+                    autoFocus
+                    required
+                    margin="dense"
+                    id="validity"
+                    label="Validity"
+                    type="text"
+                    fullWidth
+                    variant="outlined"
+                    color="secondary"
+                    onChange={handleValidityProductChange}
+                />
               </Grid>
               <Grid item xs={8}>
                 <TextField
@@ -217,7 +207,6 @@ const Product = () => {
                   onChange={handleQuantityProductChange}
                   rows={2}
                 />
-
               </Grid>
             </Grid>
           </DialogContent>

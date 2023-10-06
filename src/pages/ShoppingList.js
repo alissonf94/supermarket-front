@@ -21,6 +21,7 @@ export const ShoppingList = () => {
   const [items, setItems] = React.useState([])
 
   async function handleDelete(itemId) {
+    console.log(itemId)
     await shoppingCardService.deleteItem(itemId)
   }
 
