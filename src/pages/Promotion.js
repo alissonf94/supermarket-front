@@ -10,13 +10,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Card from '@mui/material/Card';
 
 import promotionService from '../services/PromotionService'
-import {  Await, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Promotion = () => {
-  const navigate = useNavigate()
 
   const [nameProduct, setNameProduct] = useState('')
   const [priceProduct, setPrice] = useState('')

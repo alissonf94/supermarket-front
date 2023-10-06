@@ -16,27 +16,6 @@ import { useNavigate } from 'react-router-dom';
 
 
 // Generate Order Data
-export const ListCard = async () => {
-  const [itemsCard, setItemsCard] = React.useState([])
-  const [numberOfItems, setNumberOfItems] = React.useState(0);
-
-  async function getShoppingCard() {
-    const shoppingCard = await shoppingCardService.getShoppingCard()
-    const data = await shoppingCard.json()
-    setItemsCard(data.items)
-  }
-
-  React.useEffect(() => {
-    getShoppingCard()
-  })
-
-  React.useEffect(() => {
-    setNumberOfItems(itemsCard.length);
-  }, [itemsCard]);
-
-  return numberOfItems
-};
-
 export const ShoppingList = () => {
   const navigate = useNavigate()
   const [items, setItems] = React.useState([])

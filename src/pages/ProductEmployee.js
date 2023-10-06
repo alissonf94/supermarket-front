@@ -8,14 +8,14 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextFi
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Card from '@mui/material/Card';
-import productService  from '../services/ProductService'
-import {  useNavigate } from 'react-router-dom';
+import productService from '../services/ProductService'
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import InputMask from 'react-input-mask';
+import moment from 'moment';
 
 const Product = () => {
-  const navigate = useNavigate()
 
   const [nameProduct, setNameProduct] = useState('')
   const [priceProduct, setPrice] = useState()
@@ -27,9 +27,9 @@ const Product = () => {
   const [Products, setProducts] = React.useState([])
 
   async function handleDelete(productId) {
-   await productService.deleteProduct(productId)
+    await productService.deleteProduct(productId)
   }
- 
+
   async function getProducts() {
     const products = await productService.findAllProducts()
 
@@ -52,50 +52,69 @@ const Product = () => {
     setOpen(false);
   };
 
-   const handlePriceChange = (e)=>{
+  const handlePriceChange = (e) => {
     const price = e.target.value;
     setPrice(price)
-   }
+  }
 
-   const handleNameProductChange = (e)=>{
+  const handleNameProductChange = (e) => {
     const name = e.target.value;
     setNameProduct(name)
-   }
-   const handleTypeProductChange = (e)=>{
+  }
+  const handleTypeProductChange = (e) => {
     const type = e.target.value;
     setType(type)
-   }
-   const handleDescriptionProductChange = (e)=>{
+  }
+  const handleDescriptionProductChange = (e) => {
     const description
-     = e.target.value;
+      = e.target.value;
     setdescription(description)
-   }
-   const handleQuantityProductChange = (e)=>{
+  }
+  const handleQuantityProductChange = (e) => {
     const quantity = e.target.value;
     setquantity(quantity)
-   }
-   
-   const handleValidityProductChange = (e)=>{
-    const validity = e.target.value;
-    setValidity(validity)
-   }
-   
-   async function handleCreateProduct (productName, productPrice,descriptionProduct, typeProduct, validityProduct, quantityProduct ){
+  }
+
+  const handleValidityProductChange = (e) => {
+    const inputText = e.target.value.replace(/\D/g, '');
+    const formattedInput = inputText.replace(/(\d{2})(\d{2})(\d{2})/, '$1/$2/$3');
+
+    if (isValidDate(formattedInput)) {
+      setValidity(formattedInput);
+    }
+  };
+
+  const isValidDate = (date) => {
+    const dateFormat = 'MM/DD/YY';
+
+    if (!moment(date, dateFormat, true).isValid()) {
+      return false;
+    }
+
+    const parsedDate = moment(date, dateFormat);
+    if (!parsedDate.isValid()) {
+      return false;
+    }
+
+    return true;
+  }
+
+  async function handleCreateProduct(productName, productPrice, descriptionProduct, typeProduct, validityProduct, quantityProduct) {
 
     const response = await productService.createProduct(productName, productPrice, descriptionProduct, typeProduct, validityProduct, quantityProduct)
-    
+
     const result = await response.json()
-    
-    if(response.status !== 201){
+
+    if (response.status !== 201) {
       toast(result.message)
     }
-    
-   }
 
-   function handleClick(productName, productPrice, descriptionProduct, typeProduct, validityProduct, quantityProduct){
-    handleCreateProduct(productName, productPrice,typeProduct, descriptionProduct, quantityProduct,validityProduct )
+  }
+
+  function handleClick(productName, productPrice, descriptionProduct, typeProduct, validityProduct, quantityProduct) {
+    handleCreateProduct(productName, productPrice, typeProduct, descriptionProduct, validityProduct, quantityProduct)
     handleClose()
-   }
+  }
 
   return (
     <Box sx={{ py: 1 }} maxWidth="97%" >
@@ -105,9 +124,10 @@ const Product = () => {
           <DialogTitle>New Promotion</DialogTitle>
           <DialogContent>
             <Grid container spacing={1}>
-            <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   autoFocus
+                  required
                   margin="dense"
                   id="product"
                   label="Product"
@@ -121,6 +141,7 @@ const Product = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoFocus
+                  required
                   margin="dense"
                   id="typePdoduct"
                   label="Type Product"
@@ -134,6 +155,7 @@ const Product = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoFocus
+                  required
                   margin="dense"
                   id="price"
                   label="Price"
@@ -144,23 +166,30 @@ const Product = () => {
                   onChange={handlePriceChange}
                 />
               </Grid>
-
               <Grid item xs={12} sm={6}>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="validity"
-                  label="Validity"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                  color="secondary"
+                <InputMask
+                  mask="99/99/99"
                   onChange={handleValidityProductChange}
-                />
+                >
+                  {() => (
+                    <TextField
+                      autoFocus
+                      required
+                      margin="dense"
+                      id="validity"
+                      label="Validity"
+                      type="text"
+                      fullWidth
+                      variant="outlined"
+                      color="secondary"
+                    />
+                  )}
+                </InputMask>
               </Grid>
               <Grid item xs={8}>
                 <TextField
                   autoFocus
+                  required
                   margin="dense"
                   id="desciption"
                   label="Desciption"
@@ -177,6 +206,7 @@ const Product = () => {
               <Grid item xs={4}>
                 <TextField
                   autoFocus
+                  required
                   margin="dense"
                   id="quantity"
                   label="Quantity"
@@ -193,7 +223,7 @@ const Product = () => {
           </DialogContent>
           <DialogActions >
             <Button variant='contained' onClick={handleClose} >Cancel</Button>
-            <Button variant='contained' onClick={()=>{handleClick(nameProduct, priceProduct, typeProduct, descriptionProduct, validityProduct, quantityProduct)}}>Add</Button>
+            <Button variant='contained' onClick={() => { handleClick(nameProduct, priceProduct, typeProduct, descriptionProduct, validityProduct, quantityProduct) }}>Add</Button>
           </DialogActions>
         </Dialog>
       </Box>
@@ -219,16 +249,14 @@ const Product = () => {
                   <TableCell>{product.nameProduct}</TableCell>
                   <TableCell>{product.typeProduct}</TableCell>
                   <TableCell>R$ {Number(product.price).toFixed(2).replace(".", ",")}</TableCell>
-                  <TableCell>
-                    <Box>{product.quantityProduct}</Box>
-                  </TableCell>
+                  <TableCell> {product.quantityProduct} </TableCell>
                   <TableCell > <DeleteIcon onClick={() => { handleDelete(product._id) }} sx={{ cursor: 'pointer' }} /></TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </Card>
-        <ToastContainer/>
+        <ToastContainer />
       </Grid>
     </Box>
   );
